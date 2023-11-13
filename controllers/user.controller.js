@@ -1,3 +1,4 @@
+const Todo = require('../models/todo');
 const User = require('../models/user');
 
 module.exports = {
@@ -10,8 +11,11 @@ module.exports = {
         })
     },
 
-    getUserById: (req, res) => {
+    getUserById: async (req, res) => {
+        const {id} = req.params
+        const users = await User.findById(id)
 
+        res.json(users)
     },
     
     createUser: async (req, res) => {
@@ -23,4 +27,13 @@ module.exports = {
             message: "Berhasil membuat data user"
         })
     },
+
+    getUserTodos: async (req, res) => {
+        const {id} = req.params
+
+        const todos = await Todo.find({userID: id})
+
+        res.json(todos)
+    },
+
 }
